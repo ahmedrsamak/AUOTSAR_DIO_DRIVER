@@ -1,11 +1,12 @@
 # AUOTSAR_DIO_DRIVER
 DIO MCAL  DRIVER for AVR MCU 
-#Example for main code
+# Example for main code
+```C
 /*
  * DIO.c
  *
  * Created: 7/23/2018 6:17:51 PM
- * Author : ahmed
+ * Author : ahmed samak
  */ 
 
 #include <avr/io.h>
@@ -51,4 +52,5 @@ int main(void)
 		x=error_ret(); // CHECK ERROR FUNCTION AND RETURN ERROR CODE MAPPED IN ERROR.H FILE
     }
 }
+```
 
