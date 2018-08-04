@@ -11,7 +11,8 @@ Dio_LevelType Dio_ReadChannel(const channel * RW_channel) //struct > pin num , b
 {
  if ((RW_channel->base_addres) > INVALID_MIN_INDEX && (RW_channel->base_addres) < INVALID_MAX_INDEX)
  {
-  ret=((*(volatile port_base*)(RW_channel->base_addres)) & (1<<(RW_channel->pin_num)))>>(RW_channel->pin_num);
+  
+  ret=((*(volatile port_base*)((RW_channel->base_addres)-2)) & (1<<(RW_channel->pin_num)))>>(RW_channel->pin_num);
  }
  else check_error=READ_CHANNEL;
  return ret;
@@ -37,7 +38,7 @@ Dio_LevelType Dio_ReadPort(Dio_PortType PortId)
 {
    if (PortId<INVALID_MAX_INDEX && PortId > INVALID_MIN_INDEX)
    {
-	ret=(*(volatile port_base*)(PortId));  
+	ret=(*(volatile port_base*)(PortId-2));  
    }
    else check_error=READ_PORT ;
 return ret;
@@ -62,7 +63,7 @@ Dio_PortLevelType Dio_ReadChannelGroup(const Dio_ChannelGroupType * ChannelGroup
 {
 	if ((ChannelGroupIdPtr->port<INVALID_MAX_INDEX) && (ChannelGroupIdPtr->port>INVALID_MIN_INDEX))
 	{
-		ret=((*(volatile port_base*)(ChannelGroupIdPtr->port)) & ((ChannelGroupIdPtr->mask) << (ChannelGroupIdPtr->offset))) >> (ChannelGroupIdPtr->offset);
+		ret=((*(volatile port_base*)((ChannelGroupIdPtr->port)-2)) & ((ChannelGroupIdPtr->mask) << (ChannelGroupIdPtr->offset))) >> (ChannelGroupIdPtr->offset);
 	}
 	else check_error=READ_CHANNEL_GROUP;
 
@@ -89,7 +90,7 @@ Dio_LevelType Dio_FlipChannel(const channel * RW_channel)
 {
   if ((RW_channel->base_addres) > INVALID_MIN_INDEX && (RW_channel->base_addres) < INVALID_MAX_INDEX)
   {
-	 ret=((*(volatile port_base*)(RW_channel->base_addres)) & (1<<(RW_channel->pin_num)))>>(RW_channel->pin_num);
+	 ret=((*(volatile port_base*)((RW_channel->base_addres)-2)) & (1<<(RW_channel->pin_num)))>>(RW_channel->pin_num);
 	  	  if (ret == STD_LOW)
 	  	  {
 		  	  (*(volatile port_base*)(RW_channel->base_addres)) |= (1<<(RW_channel->pin_num));
